@@ -34,16 +34,7 @@ public class Application {
     private static String checkAnswer(String answer, String userInput) {
         StringBuilder hintBuilder = new StringBuilder();
 
-        int[] strikeAndBall = new int[2];
-
-        if (answer.charAt(0) == userInput.charAt(0)) strikeAndBall[0]++;
-        if (answer.charAt(0) == userInput.charAt(1) || answer.charAt(0) == userInput.charAt(2)) strikeAndBall[1]++;
-
-        if (answer.charAt(1) == userInput.charAt(1)) strikeAndBall[0]++;
-        if (answer.charAt(1) == userInput.charAt(0) || answer.charAt(1) == userInput.charAt(2)) strikeAndBall[1]++;
-
-        if (answer.charAt(2) == userInput.charAt(2)) strikeAndBall[0]++;
-        if (answer.charAt(2) == userInput.charAt(0) || answer.charAt(2) == userInput.charAt(1)) strikeAndBall[1]++;
+        int[] strikeAndBall = checkStrikeOrBall(answer, userInput);
 
         int strike = strikeAndBall[0];
         int ball = strikeAndBall[1];
@@ -54,6 +45,27 @@ public class Application {
         if (strike > 0) hintBuilder.append(strike).append("스트라이크");
 
         return hintBuilder.toString();
+    }
+
+    /**
+     * 스트라이크와 볼 갯수를 체크한다.
+     * @param answer 정답값
+     * @param userInput 사용자 입력값
+     * @return int[] 0 : 스트라이크, 1 : 볼
+     */
+    private static int[] checkStrikeOrBall(String answer, String userInput) {
+        int[] result = new int[2];
+
+        if (answer.charAt(0) == userInput.charAt(0)) result[0]++;
+        if (answer.charAt(0) == userInput.charAt(1) || answer.charAt(0) == userInput.charAt(2)) result[1]++;
+
+        if (answer.charAt(1) == userInput.charAt(1)) result[0]++;
+        if (answer.charAt(1) == userInput.charAt(0) || answer.charAt(1) == userInput.charAt(2)) result[1]++;
+
+        if (answer.charAt(2) == userInput.charAt(2)) result[0]++;
+        if (answer.charAt(2) == userInput.charAt(0) || answer.charAt(2) == userInput.charAt(1)) result[1]++;
+
+        return result;
     }
 
     /**
