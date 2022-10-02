@@ -23,6 +23,20 @@ public class Application {
             playBaseBallGame(answer);
             return;
         }
+
+        retryOrExit();
+    }
+
+    /**
+     * 재시작한다면 랜덤하게 정답값을 생성하고, playBaseBallGame, 종료한다면 아무처리도 하지 않는다.
+     */
+    private static void retryOrExit() {
+        String retryInput = getUserRetryInput();
+        if (retryInput.equals("1")) {
+            String answer = createValidRandomNumber();
+            System.out.println(answer);
+            playBaseBallGame(answer);
+        }
     }
 
     /**
@@ -69,6 +83,20 @@ public class Application {
     }
 
     /**
+     * 사용자로부터 재시작여부 숫자값을 입력받는다.
+     * @return string
+     */
+    private static String getUserRetryInput() {
+        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+
+        String retryInput = Console.readLine();
+        retryInputValidation(retryInput);
+
+        return retryInput;
+    }
+
+    /**
      * 사용자로부터 숫자값을 입력받는다.
      * @return string
      */
@@ -89,6 +117,14 @@ public class Application {
         String numericAndLength3 = "^[0-9]{3}$";
 
         if (!userInput.matches(numericAndLength3)) throw new IllegalArgumentException();
+    }
+
+    /**
+     * 게임 재시작(1), 종료(2) 외의 값을 입력할 경우 IllegalArgumentException을 내려준다.
+     * @param retryInput 사용자 입력값
+     */
+    private static void retryInputValidation(String retryInput) {
+        if (!retryInput.equals("1") && !retryInput.equals("2")) throw new IllegalArgumentException();
     }
 
     /**
