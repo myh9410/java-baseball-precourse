@@ -14,6 +14,7 @@ public class Application {
      * @param answer 정답값
      */
     private static void playBaseBallGame(String answer) {
+        System.out.print("숫자를 입력해주세요 : ");
         String userInput = getUserNumberInput();
         String inputResult = checkAnswer(answer, userInput);
 
@@ -31,6 +32,8 @@ public class Application {
      * 재시작한다면 랜덤하게 정답값을 생성하고, playBaseBallGame, 종료한다면 아무처리도 하지 않는다.
      */
     private static void retryOrExit() {
+        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
         String retryInput = getUserRetryInput();
         if (retryInput.equals("1")) {
             String answer = createValidRandomNumber();
@@ -45,7 +48,7 @@ public class Application {
      * @param userInput 사용자 입력값
      * @return string
      */
-    private static String checkAnswer(String answer, String userInput) {
+    protected static String checkAnswer(String answer, String userInput) {
         StringBuilder hintBuilder = new StringBuilder();
 
         int[] strikeAndBall = checkStrikeOrBall(answer, userInput);
@@ -87,9 +90,6 @@ public class Application {
      * @return string
      */
     private static String getUserRetryInput() {
-        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
-
         String retryInput = Console.readLine();
         retryInputValidation(retryInput);
 
@@ -101,8 +101,6 @@ public class Application {
      * @return string
      */
     private static String getUserNumberInput() {
-        System.out.print("숫자를 입력해주세요 : ");
-
         String userInput = Console.readLine();
         numberInputValidation(userInput);
 
@@ -113,7 +111,7 @@ public class Application {
      * 사용자가 잘못된 값을 입력할 경우 IllegalArgumentException을 내려준다.
      * @param userInput 사용자 입력값
      */
-    private static void numberInputValidation(String userInput) {
+    protected static void numberInputValidation(String userInput) {
         String numericAndLength3 = "^[0-9]{3}$";
 
         if (!userInput.matches(numericAndLength3)) throw new IllegalArgumentException();
@@ -123,7 +121,7 @@ public class Application {
      * 게임 재시작(1), 종료(2) 외의 값을 입력할 경우 IllegalArgumentException을 내려준다.
      * @param retryInput 사용자 입력값
      */
-    private static void retryInputValidation(String retryInput) {
+    protected static void retryInputValidation(String retryInput) {
         if (!retryInput.equals("1") && !retryInput.equals("2")) throw new IllegalArgumentException();
     }
 
@@ -131,7 +129,7 @@ public class Application {
      * 정답값을 생성한다.
      * @return string
      */
-    private static String createValidRandomNumber() {
+    protected static String createValidRandomNumber() {
         String answer = Integer.toString(Randoms.pickNumberInRange(1, 9));
         answer += Integer.toString(Randoms.pickNumberInRange(1, 9));
         answer += Integer.toString(Randoms.pickNumberInRange(1, 9));
@@ -146,7 +144,7 @@ public class Application {
      * @param answer 정답값
      * @return boolean
      */
-    private static boolean checkUniqueNumber(String answer) {
+    protected static boolean checkUniqueNumber(String answer) {
         return answer.charAt(0) != answer.charAt(1) &&
                 answer.charAt(0) != answer.charAt(2) &&
                 answer.charAt(1) != answer.charAt(2);
